@@ -1,0 +1,25 @@
+.result-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  font-family: "Segoe UI", sans-serif;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.feedback-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.correct {
+  background-color: #e0fce0;
+  padding: 10px;
+  border-left: 4px solid green;
+}
+
+.incorrect {
+  background-color: #fde0e0;
+  padding: 10px;
+  border-left: 4px solid red;
+}

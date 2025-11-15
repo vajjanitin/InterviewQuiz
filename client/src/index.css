@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Theme variables and global color tokens.
+  We centralize site colors here using CSS variables so toggling the
+  top-level `.dark` class flips the entire color scheme.
+  Comment: :root -> light theme, .dark -> dark theme
+*/
+:root {
+  /* primary accent gradient endpoints (used in gradients) */
+  --accent-start: #7c3aed; /* purple-600 */
+  --accent-end: #ec4899; /* pink-500 */
+
+  /* surface / background / text tokens */
+  --bg: #ffffff; /* page background */
+  --surface: #ffffff; /* cards, nav, modal surfaces */
+  --muted: #6b7280; /* secondary text */
+  --text: #111827; /* main text (gray-900) */
+  --border: #e5e7eb; /* neutral-200 */
+  --shadow: 0 8px 24px rgba(16,24,40,0.06);
+}
+
+/* Dark theme variable set - applied when `document.documentElement` has .dark */
+.dark {
+  --accent-start: #7c3aed;
+  --accent-end: #ec4899;
+
+  --bg: #071025; /* deep navy */
+  --surface: #0b1220; /* card / panel background */
+  --muted: #9ca3af; /* gray-400 */
+  --text: #e6eef8; /* near-white */
+  --border: #1f2937; /* neutral-800 */
+  --shadow: 0 8px 28px rgba(2,6,23,0.6);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  :root, .dark {
+    --transition-duration: 0ms;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  :root, .dark {
+    --transition-duration: 240ms;
+  }
+}
+
+/* Apply global theme tokens */
+html, body, #root {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color var(--transition-duration) ease, color var(--transition-duration) ease;
+}
+
+/* Surface elements: navbars, cards, modals, dropdowns */
+nav, .card, .modal, .dropdown, .popover, header, footer, .rounded-lg {
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+  box-shadow: var(--shadow) !important;
+  transition: background-color var(--transition-duration) ease, color var(--transition-duration) ease, box-shadow var(--transition-duration) ease;
+}
+
+/* Inputs & buttons inherit theme */
+input, textarea, select, button {
+  background-color: transparent;
+  color: inherit;
+  border-color: var(--border) !important;
+}
+
+/* Ensure utility classes that use white backgrounds are visually themed */
+.bg-white { background-color: var(--surface) !important; }
+.text-gray-800 { color: var(--text) !important; }
+.text-gray-700 { color: var(--text) !important; }
+.bg-gray-100 { background-color: rgba(255,255,255,0.04) !important; }
+
+/* Theme toggle icon styles */
+.theme-toggle { position: relative; width: 2.25rem; height: 2.25rem; display: inline-flex; align-items: center; justify-content: center; }
+.theme-toggle svg { width: 1.25rem; height: 1.25rem; display: block; transition: opacity var(--transition-duration) ease, transform var(--transition-duration) ease; }
+.theme-toggle .icon-sun { transform-origin: center; }
+.theme-toggle .icon-moon { transform-origin: center; position: absolute; }
+
+/* Crossfade behaviour: when dark show moon (opacity:1) else show sun */
+.theme-toggle[data-mode="dark"] .icon-moon { opacity: 1; transform: scale(1); }
+.theme-toggle[data-mode="dark"] .icon-sun { opacity: 0; transform: scale(0.9) rotate(-15deg); }
+.theme-toggle[data-mode="light"] .icon-sun { opacity: 1; transform: scale(1); }
+.theme-toggle[data-mode="light"] .icon-moon { opacity: 0; transform: scale(0.9) rotate(15deg); }
+
+/* Focus / hover accent for the toggle - subtle glow using existing palette */
+.theme-toggle:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(124,58,237,0.12); border-radius: 9999px; }
+
+/* small utility for muted text that follows theme */
+.text-muted { color: var(--muted) !important; }
+
+/* card helper to be used by components instead of raw bg classes */
+.card { background-color: var(--surface); color: var(--text); border-radius: 0.75rem; }
+
+/* Smooth animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes blob {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.4s ease-out;
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+/* Simple confetti animation for result celebration */
+@keyframes confetti-fall {
+  0% { transform: translateY(-10%) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(110%) rotate(360deg); opacity: 1; }
+}
+.confetti {
+  position: absolute;
+  inset: 0;
+}
+.confetti::before, .confetti::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -10%;
+  width: 6px;
+  height: 10px;
+  background: linear-gradient(45deg, #f97316, #f43f5e);
+  transform-origin: center;
+  animation: confetti-fall 2000ms linear infinite;
+}
+.confetti::after { left: 30%; background: linear-gradient(45deg,#60a5fa,#7c3aed); animation-delay: 200ms }
+
+/* Add a few more pseudo elements using keyframe offsets via nth-child-like classes are not trivial with CSS alone; keep simple two-piece confetti for now */
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Remove default button styles for custom styling */
+button {
+  transition: all 0.3s ease;
+}
+
+/* Input focus smooth transitions */
+input:focus {
+  transition: all 0.2s ease;
+}
