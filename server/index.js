@@ -16,6 +16,11 @@ app.use("/api/profile", require("./routes/profile"));
 app.use("/api/questions", require("./routes/question"));
 app.use("/api/interview", require("./routes/InterviewRoutes")); // ✅ New route for fetching interview questions
 
+// Health check endpoint for platform probes and quick debugging
+app.get('/health', (req, res) => {
+	res.status(200).json({ status: 'ok' });
+});
+
 const PORT = process.env.PORT || 5000;
 
 // Debug: show the runtime PORT value (helps diagnose Render deployments)
