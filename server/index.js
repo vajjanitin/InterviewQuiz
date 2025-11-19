@@ -14,7 +14,7 @@ app.use("/api/mcq", require("./routes/mcqRoutes"));
 app.use("/api/results", require("./routes/resultRoutes"));
 app.use("/api/profile", require("./routes/profile"));
 app.use("/api/questions", require("./routes/question"));
-app.use("/api/interview", require("./routes/interviewRoutes")); // ✅ New route for fetching interview questions
+app.use("/api/interview", require("./routes/InterviewRoutes")); // ✅ New route for fetching interview questions
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
