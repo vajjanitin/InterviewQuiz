@@ -17,4 +17,7 @@ app.use("/api/questions", require("./routes/question"));
 app.use("/api/interview", require("./routes/InterviewRoutes")); // ✅ New route for fetching interview questions
 
 const PORT = process.env.PORT || 5000;
+
+// Debug: show the runtime PORT value (helps diagnose Render deployments)
+console.log("Runtime process.env.PORT:", process.env.PORT);
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
