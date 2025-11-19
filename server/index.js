@@ -16,6 +16,11 @@ app.use("/api/profile", require("./routes/profile"));
 app.use("/api/questions", require("./routes/question"));
 app.use("/api/interview", require("./routes/InterviewRoutes")); // ✅ New route for fetching interview questions
 
+// Root route so GET / returns a friendly message (fixes Render 404 on /)
+app.get('/', (req, res) => {
+	res.send('Server is running');
+});
+
 // Health check endpoint for platform probes and quick debugging
 app.get('/health', (req, res) => {
 	res.status(200).json({ status: 'ok' });
