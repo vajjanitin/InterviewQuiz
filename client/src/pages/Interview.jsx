@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../config";
 import { SyncLoader } from "react-spinners";
 import { useMediaQuery } from "react-responsive";
 
@@ -47,7 +48,7 @@ const Interview = () => {
     const fetchQuestions = async () => {
       try {
         // difficulty field added for mode filtering - pass mode as query parameter
-        const response = await axios.get(`http://localhost:5000/api/questions/${subject}`, {
+        const response = await axios.get(`${API_BASE}/api/questions/${subject}`, {
           params: { count, difficulty: mode },
         });
         if (response.data.length === 0) {

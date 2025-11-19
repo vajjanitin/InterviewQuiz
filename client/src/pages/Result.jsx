@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../config";
 import { SyncLoader } from "react-spinners";
 
 const Result = () => {
@@ -19,7 +20,7 @@ const Result = () => {
         setLoading(true);
         // Corrected GET request to fetch the quiz result by its ID
         if (id) {
-          const response = await axios.get(`http://localhost:5000/api/results/detail/${id}`);
+          const response = await axios.get(`${API_BASE}/api/results/detail/${id}`);
           const fetchedResult = response.data;
           if (!fetchedResult || !fetchedResult.answers || typeof fetchedResult.score !== 'number') {
             throw new Error("Received invalid quiz data from the server. Data might be missing or corrupted.");
@@ -101,7 +102,7 @@ const Result = () => {
     try {
       setPosting(true);
       setPostError(null);
-      const response = await axios.post('http://localhost:5000/api/results/submit', clientResult);
+      const response = await axios.post(`${API_BASE}/api/results/submit`, clientResult);
       if (response.status === 201) {
         // Replace history to a server-backed result URL
         const serverId = response.data._id;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../config";
 
 // Styled Login component with a fresh design
 const Login = () => {
@@ -13,7 +14,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post(`${API_BASE}/api/auth/login`, {
         email,
         password,
       });

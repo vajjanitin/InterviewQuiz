@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { API_BASE } from "../config";
 
 const AuthModalContext = createContext(null);
 
@@ -32,7 +33,7 @@ export const AuthModalProvider = ({ children }) => {
   const close = () => setShowModal(false);
 
   const login = async ({ email, password }) => {
-    const res = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+    const res = await axios.post(`${API_BASE}/api/auth/login`, { email, password });
     if (res.data?.token) {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -46,7 +47,7 @@ export const AuthModalProvider = ({ children }) => {
   };
 
   const register = async ({ username, email, password }) => {
-    const res = await axios.post("http://localhost:5000/api/auth/register", { username, email, password });
+    const res = await axios.post(`${API_BASE}/api/auth/register`, { username, email, password });
     if (res.data?.token) {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));

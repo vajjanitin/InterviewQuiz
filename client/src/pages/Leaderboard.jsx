@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE } from "../config";
 
 const branches = ["CSE", "ECE", "Mech"];
 const subjects = {
@@ -32,7 +33,7 @@ const Leaderboard = () => {
       if (branch) params.branch = branch;
       if (subject) params.subject = subject;
 
-      const res = await axios.get("http://localhost:5000/api/results/leaderboard", { params });
+      const res = await axios.get(`${API_BASE}/api/results/leaderboard`, { params });
       
       const sortedData = res.data.sort((a, b) => {
         if (sortBy === "score") {

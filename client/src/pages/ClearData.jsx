@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { API_BASE } from "../config";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SyncLoader } from "react-spinners";
@@ -23,7 +24,7 @@ const ClearData = () => {
       }
 
       // This makes a DELETE request to the new backend endpoint
-      const response = await axios.delete(`http://localhost:5000/api/results/${username}`);
+      const response = await axios.delete(`${API_BASE}/api/results/${username}`);
       
       if (response.status === 200) {
         setMessage(response.data.message);

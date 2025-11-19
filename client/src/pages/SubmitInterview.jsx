@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE } from '../config';
 import { SyncLoader } from 'react-spinners';
 
 // The intermediate component to handle quiz submission to the backend.
@@ -34,7 +35,7 @@ const SubmitInterview = () => {
         setLoading(true);
 
         // Send the quiz results to the backend API endpoint.
-        const response = await axios.post('http://localhost:5000/api/results/submit', quizResults);
+        const response = await axios.post(`${API_BASE}/api/results/submit`, quizResults);
 
         if (response.status === 201) {
           // On successful submission, we can remove the data from local storage.

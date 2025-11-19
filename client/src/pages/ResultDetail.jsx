@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../config";
 import { SyncLoader } from "react-spinners";
 
 // The ResultDetail component with enhanced styling and error handling
@@ -33,7 +34,7 @@ const ResultDetail = () => {
     // Asynchronous function to fetch data
     const fetchResult = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/results/detail/${id}`);
+        const response = await axios.get(`${API_BASE}/api/results/detail/${id}`);
         setResult(response.data);
       } catch (err) {
         // Handle errors gracefully by setting an error state

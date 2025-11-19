@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE } from "../config";
 import { useNavigate } from "react-router-dom";
 import { SyncLoader } from "react-spinners";
 
@@ -21,7 +22,7 @@ const Profile = () => {
         return;
       }
       try {
-        const res = await axios.get("http://localhost:5000/api/profile", {
+        const res = await axios.get(`${API_BASE}/api/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         
